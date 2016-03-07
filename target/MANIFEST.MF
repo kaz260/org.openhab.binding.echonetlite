@@ -1,0 +1,25 @@
+Manifest-Version: 1.0
+Bundle-Description: This is the ECHONETLite binding of the open Home A
+ utomation Bus (openHAB)
+Bundle-License: http://www.eclipse.org/legal/epl-v10.html
+Bundle-SymbolicName: org.openhab.binding.echonetlite
+Bundle-ManifestVersion: 2
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8,JavaSE-1.7
+Bundle-Vendor: openHAB.org
+Bundle-DocURL: http://www.openhab.org
+Import-Package: org.openhab.core.binding,org.openhab.core.events,org.o
+ penhab.core.items,org.openhab.core.library.items,org.openhab.core.lib
+ rary.types,org.openhab.core.transform,org.openhab.core.types,org.open
+ hab.model.item.binding,org.osgi.framework,org.osgi.service.component,
+ org.osgi.service.event,org.osgi.service.cm,org.slf4j
+Service-Component: OSGI-INF/binding.xml, OSGI-INF/genericbindingprovid
+ er.xml
+Export-Package: org.openhab.binding.echonetlite
+Bundle-Name: openHAB ECHONETLite Binding
+Bundle-Version: 1.8.0.201603020714
+Bundle-ClassPath: lib/commons-lang3-3.3.2.jar,lib/guava-18.0.jar,.
+Private-Package: org.openhab.binding.echonetlite.internal
+Ignore-Package: org.openhab.binding.echonetlite.internal
+Bundle-Activator: org.openhab.binding.echonetlite.internal.ECHONETLite
+ Activator
+
