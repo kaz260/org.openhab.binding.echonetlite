@@ -207,7 +207,7 @@ public class ECHONETLiteBinding extends AbstractActiveBinding<ECHONETLiteBinding
 					try {
 						ECHONETLiteConnectingThread connector =
 							new ECHONETLiteConnectingThread(itemName, deviceInfo.getPort(), dataByte,
-								deviceInfo.getHost());
+								deviceInfo.getHost(), itemValueMap.get(itemName));
 
 						connector.start();
                                         	connector.setEventPublisher(eventPublisher);
@@ -259,7 +259,7 @@ public class ECHONETLiteBinding extends AbstractActiveBinding<ECHONETLiteBinding
 				try {
 					ECHONETLiteConnectingThread connector =
 						new ECHONETLiteConnectingThread(itemName, deviceInfo.getPort(), dataByte,
-							deviceInfo.getHost());
+							deviceInfo.getHost(), itemValueMap.get(itemName));
 
 					// Starts the connector thread
 					connector.start();
@@ -280,9 +280,9 @@ public class ECHONETLiteBinding extends AbstractActiveBinding<ECHONETLiteBinding
 	@Override
 	protected void internalReceiveUpdate(String itemName, State newState) {
 		logger.debug("internalReceiveUpdate ({}:{})", itemName, newState);
-		if (itemValueMap.containsKey(itemName) && itemValueMap.get(itemName).equals(newState)) {
-			return;
-		}
+		//if (itemValueMap.containsKey(itemName) && itemValueMap.get(itemName).equals(newState)) {
+		//	return;
+		//}
 
 		ECHONETLiteBindingProvider providerCmd = null;
 
@@ -311,7 +311,7 @@ public class ECHONETLiteBinding extends AbstractActiveBinding<ECHONETLiteBinding
 			try {
 				byte[] dataByte = buildData(deviceInfo, epc, edtBytes);
 				ECHONETLiteConnectingThread connector =
-					new ECHONETLiteConnectingThread(itemName, deviceInfo.getPort(), dataByte, deviceInfo.getHost());
+					new ECHONETLiteConnectingThread(itemName, deviceInfo.getPort(), dataByte, deviceInfo.getHost(), itemValueMap.get(itemName));
 				// Starts the connector thread
 				connector.start();
 				itemValueMap.put(itemName, newState);

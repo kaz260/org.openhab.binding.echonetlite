@@ -34,8 +34,8 @@ import java.net.InetAddress;
  *
  */
 public class ECHONETLiteConnectingThread extends Thread {
-	private static final Logger logger = LoggerFactory.getLogger(ECHONETLiteBinding.class);
-
+	//private static final Logger logger = LoggerFactory.getLogger(ECHONETLiteBinding.class);
+	private static final Logger logger = LoggerFactory.getLogger(ECHONETLiteConnectingThread.class);
 
 	/**
 	 * The UDP connector
@@ -54,7 +54,11 @@ public class ECHONETLiteConnectingThread extends Thread {
 	 */
 	private byte[] data;
 
+	private org.openhab.core.types.State oldState;
+	//private State oldState;
+
 	private org.openhab.core.types.State state = null;
+	//private State state = null;
 
 	private EventPublisher eventPublisher = null;
 
@@ -66,11 +70,12 @@ public class ECHONETLiteConnectingThread extends Thread {
 		this.eventPublisher = null;
 	}
 
-	public ECHONETLiteConnectingThread(String in, int port, byte[] dt, String hst) {
+	public ECHONETLiteConnectingThread(String in, int port, byte[] dt, String hst, org.openhab.core.types.State state) {
 		udpConnector = new ECHONETLiteUDPConnector(port, port);
 		itemName = in;
 		data = dt;
 		host = hst;
+		oldState = state;
 	}
 
 	/**
@@ -83,8 +88,9 @@ public class ECHONETLiteConnectingThread extends Thread {
 		// Receives the reply from devices
 		final char[] response = receiveMessage();
 		state = StringType.valueOf(String.valueOf(Integer.parseInt(String.valueOf(response), 16)));
-		eventPublisher.postUpdate(itemName, state);
-
+		if (oldState == null || !state.toString().equals(oldState.toString())) {
+				eventPublisher.postUpdate(itemName, state);
+		}
 		udpConnector.disconnect();
 	}
 
@@ -108,7 +114,6 @@ public class ECHONETLiteConnectingThread extends Thread {
 	/**
 	 * Receives ECHONETLite reply message Checks if it is an error message
 	 */
-	//public void receiveMessage() {
 	char[] receiveMessage() {
 		logger.debug("checking the response from the ECHONETLite device");
 		char[] res = {'0', '0', '0', '0'};
