@@ -113,7 +113,7 @@ public class ECHONETLiteBinding extends AbstractActiveBinding<ECHONETLiteBinding
 		super.activate();
 		setProperlyConfigured(true);
 	}
-	/*
+
 	public void activate(final BundleContext bundleContext,
 		final Map<String, Object> configuration) {
 
@@ -128,7 +128,6 @@ public class ECHONETLiteBinding extends AbstractActiveBinding<ECHONETLiteBinding
 
 		setProperlyConfigured(true);
 	}
-	*/
 
 	/**
 	 * Called by the SCR when the configuration of a binding has been changed through the ConfigAdmin
@@ -235,7 +234,6 @@ public class ECHONETLiteBinding extends AbstractActiveBinding<ECHONETLiteBinding
 				String deviceId = provider.getDeviceId(itemName, command);
 				String epc = provider.getEpc(itemName, command);
 				String edt = provider.getEdt(itemName, command);
-				logger.debug("### edt:{}", edt);
 
 				DeviceInfo deviceInfo = deviceMap.get(deviceId);
 				if (deviceInfo == null) {
@@ -252,7 +250,6 @@ public class ECHONETLiteBinding extends AbstractActiveBinding<ECHONETLiteBinding
 				} else {
 					edtBytes = getData(command);
 				}
-				logger.debug("### edtBytes: {}", edtBytes);
 
 				byte[] dataByte = buildData(deviceInfo, epc, edtBytes);
 
